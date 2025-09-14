@@ -1,6 +1,6 @@
 {
   "name": "claude-code-settings-schema",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Generate JSON Schema for Claude Code settings.json files",
   "main": "dist/cli.js",
   "bin": {
