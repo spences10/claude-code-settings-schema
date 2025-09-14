@@ -1,0 +1,8 @@
+{
+	"$schema": "../claude-code-settings.schema.json",
+	"permissions": {
+		"allow": ["Bash(pnpm build:*)", "Bash(pnpm generate:*)"],
+		"deny": [],
+		"ask": []
+	}
+}

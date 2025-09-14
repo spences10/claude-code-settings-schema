@@ -1,0 +1,176 @@
+
+> claude-code-settings-schema@0.0.0 generate /home/scott/repos/claude-code-settings-schema
+> node dist/cli.js
+
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Claude Code Settings",
+  "description": "JSON Schema for Claude Code .claude/settings.json configuration files",
+  "type": "object",
+  "properties": {
+    "permissions": {
+      "description": "Permission configuration for tool usage and file access",
+      "type": "object",
+      "properties": {
+        "allow": {
+          "description": "Array of allowed tool patterns. Format: Tool(pattern) or just Tool",
+          "pattern": "^[A-Za-z]+(\\([^)]*\\))?$",
+          "examples": [
+            "Bash(git diff:*)",
+            "Read(src/*)",
+            "Write(*.md)",
+            "WebFetch"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*(([^)]*))?$",
+            "description": "Tool permission pattern. Format: ToolName or ToolName(pattern)",
+            "examples": [
+              "Bash",
+              "Read(*.md)",
+              "Write(src/*)",
+              "WebFetch",
+              "Bash(git diff:*)"
+            ]
+          },
+          "title": "allow"
+        },
+        "deny": {
+          "description": "Array of denied tool patterns. Format: Tool(pattern) or just Tool",
+          "pattern": "^[A-Za-z]+(\\([^)]*\\))?$",
+          "examples": [
+            "Read(./.env)",
+            "WebFetch",
+            "Bash(rm *)"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*(([^)]*))?$",
+            "description": "Tool permission pattern. Format: ToolName or ToolName(pattern)",
+            "examples": [
+              "Bash",
+              "Read(*.md)",
+              "Write(src/*)",
+              "WebFetch",
+              "Bash(git diff:*)"
+            ]
+          },
+          "title": "deny"
+        },
+        "ask": {
+          "description": "Array of tool patterns that require confirmation. Format: Tool(pattern) or just Tool",
+          "pattern": "^[A-Za-z]+(\\([^)]*\\))?$",
+          "examples": [
+            "Write(*)",
+            "Bash(*)",
+            "Delete"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*(([^)]*))?$",
+            "description": "Tool permission pattern. Format: ToolName or ToolName(pattern)",
+            "examples": [
+              "Bash",
+              "Read(*.md)",
+              "Write(src/*)",
+              "WebFetch",
+              "Bash(git diff:*)"
+            ]
+          },
+          "title": "ask"
+        }
+      },
+      "title": "permissions"
+    },
+    "env": {
+      "$ref": "#/definitions/Record<string,string>",
+      "description": "Environment variables to set for Claude Code sessions",
+      "title": "env"
+    },
+    "model": {
+      "description": "Override the default AI model",
+      "type": "string",
+      "title": "model"
+    },
+    "hooks": {
+      "description": "Custom hooks for tool execution",
+      "type": "object",
+      "properties": {
+        "PreToolUse": {
+          "$ref": "#/definitions/Record<string,string>",
+          "description": "Commands to run before tool execution",
+          "title": "PreToolUse"
+        },
+        "PostToolUse": {
+          "$ref": "#/definitions/Record<string,string>",
+          "description": "Commands to run after tool execution",
+          "title": "PostToolUse"
+        }
+      },
+      "title": "hooks"
+    },
+    "apiKeyHelper": {
+      "description": "Script path for generating authentication values",
+      "type": "string",
+      "title": "apiKeyHelper"
+    },
+    "statusLine": {
+      "description": "Custom status line configuration",
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "statusLine"
+    },
+    "outputStyle": {
+      "description": "Output style configuration",
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": true
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "title": "outputStyle"
+    }
+  },
+  "definitions": {
+    "Record<string,string>": {
+      "title": "Record<string,string>",
+      "type": "object"
+    }
+  },
+  "examples": [
+    {
+      "permissions": {
+        "allow": [
+          "Bash(git diff:*)",
+          "Read(src/*)"
+        ],
+        "deny": [
+          "Read(./.env)",
+          "WebFetch"
+        ],
+        "ask": [
+          "Write(*)"
+        ]
+      },
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "model": "claude-3-5-sonnet-20241022"
+    }
+  ]
+}

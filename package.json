@@ -1,0 +1,31 @@
+{
+  "name": "claude-code-settings-schema",
+  "version": "0.0.0",
+  "description": "Generate JSON Schema for Claude Code settings.json files",
+  "main": "dist/cli.js",
+  "bin": {
+    "generate-claude-schema": "dist/cli.js"
+  },
+  "scripts": {
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "build": "tsc",
+    "generate": "node dist/cli.js"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "json-schema",
+    "settings"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.4.0",
+    "prettier": "^3.6.2",
+    "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "typescript-json-schema": "^0.65.1"
+  }
+}
