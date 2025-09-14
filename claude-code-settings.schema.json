@@ -99,7 +99,7 @@
           "description": "Hooks that run before tool calls",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "PreToolUse"
         },
@@ -107,7 +107,7 @@
           "description": "Hooks that run after tool completion",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "PostToolUse"
         },
@@ -115,7 +115,7 @@
           "description": "Hooks that run on notifications",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "Notification"
         },
@@ -123,7 +123,7 @@
           "description": "Hooks that run when user submits a prompt",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "UserPromptSubmit"
         },
@@ -131,7 +131,7 @@
           "description": "Hooks that run when stopping",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "Stop"
         },
@@ -139,7 +139,7 @@
           "description": "Hooks that run when subagent stops",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "SubagentStop"
         },
@@ -147,7 +147,7 @@
           "description": "Hooks that run before compacting",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "PreCompact"
         },
@@ -155,7 +155,7 @@
           "description": "Hooks that run at session start",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "SessionStart"
         },
@@ -163,7 +163,7 @@
           "description": "Hooks that run at session end",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_matcher"
+            "$ref": "#/definitions/HookMatcher"
           },
           "title": "SessionEnd"
         }
@@ -176,7 +176,7 @@
       "title": "apiKeyHelper"
     },
     "statusLine": {
-      "$ref": "#/definitions/status_line_config",
+      "$ref": "#/definitions/StatusLineConfig",
       "description": "Custom status line configuration",
       "title": "statusLine"
     },
@@ -200,9 +200,9 @@
       "title": "Record<string,string>",
       "type": "object"
     },
-    "hook_matcher": {
+    "HookMatcher": {
       "description": "Hook matcher configuration",
-      "title": "hook_matcher",
+      "title": "HookMatcher",
       "type": "object",
       "properties": {
         "matcher": {
@@ -221,7 +221,7 @@
           "description": "Array of hooks to execute",
           "type": "array",
           "items": {
-            "$ref": "#/definitions/hook_command"
+            "$ref": "#/definitions/HookCommand"
           },
           "title": "hooks"
         }
@@ -230,9 +230,9 @@
         "hooks"
       ]
     },
-    "hook_command": {
+    "HookCommand": {
       "description": "Hook command configuration",
-      "title": "hook_command",
+      "title": "HookCommand",
       "type": "object",
       "properties": {
         "type": {
@@ -257,9 +257,9 @@
         "type"
       ]
     },
-    "status_line_config": {
+    "StatusLineConfig": {
       "description": "Status line command configuration",
-      "title": "status_line_config",
+      "title": "StatusLineConfig",
       "type": "object",
       "properties": {
         "type": {

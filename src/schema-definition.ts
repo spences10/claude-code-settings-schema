@@ -24,7 +24,7 @@ export type ClaudeModel =
 /**
  * Hook command configuration
  */
-export interface hook_command {
+export interface HookCommand {
 	/**
 	 * Command type
 	 */
@@ -46,7 +46,7 @@ export interface hook_command {
 /**
  * Valid Claude Code tool names
  */
-export type valid_tool_name =
+export type ValidToolName =
 	| 'Bash'
 	| 'Edit'
 	| 'Glob'
@@ -64,7 +64,7 @@ export type valid_tool_name =
 /**
  * Hook matcher configuration
  */
-export interface hook_matcher {
+export interface HookMatcher {
 	/**
 	 * Tool pattern matcher (optional, case-sensitive)
 	 * Empty string or "*" matches all tools
@@ -77,13 +77,13 @@ export interface hook_matcher {
 	/**
 	 * Array of hooks to execute
 	 */
-	hooks: hook_command[];
+	hooks: HookCommand[];
 }
 
 /**
  * Status line command configuration
  */
-export interface status_line_config {
+export interface StatusLineConfig {
 	/**
 	 * Status line type
 	 */
@@ -149,47 +149,47 @@ export interface ClaudeCodeSettings {
 		/**
 		 * Hooks that run before tool calls
 		 */
-		PreToolUse?: hook_matcher[];
+		PreToolUse?: HookMatcher[];
 
 		/**
 		 * Hooks that run after tool completion
 		 */
-		PostToolUse?: hook_matcher[];
+		PostToolUse?: HookMatcher[];
 
 		/**
 		 * Hooks that run on notifications
 		 */
-		Notification?: hook_matcher[];
+		Notification?: HookMatcher[];
 
 		/**
 		 * Hooks that run when user submits a prompt
 		 */
-		UserPromptSubmit?: hook_matcher[];
+		UserPromptSubmit?: HookMatcher[];
 
 		/**
 		 * Hooks that run when stopping
 		 */
-		Stop?: hook_matcher[];
+		Stop?: HookMatcher[];
 
 		/**
 		 * Hooks that run when subagent stops
 		 */
-		SubagentStop?: hook_matcher[];
+		SubagentStop?: HookMatcher[];
 
 		/**
 		 * Hooks that run before compacting
 		 */
-		PreCompact?: hook_matcher[];
+		PreCompact?: HookMatcher[];
 
 		/**
 		 * Hooks that run at session start
 		 */
-		SessionStart?: hook_matcher[];
+		SessionStart?: HookMatcher[];
 
 		/**
 		 * Hooks that run at session end
 		 */
-		SessionEnd?: hook_matcher[];
+		SessionEnd?: HookMatcher[];
 	};
 
 	/**
@@ -201,7 +201,7 @@ export interface ClaudeCodeSettings {
 	/**
 	 * Custom status line configuration
 	 */
-	statusLine?: status_line_config;
+	statusLine?: StatusLineConfig;
 
 	/**
 	 * Output style configuration
