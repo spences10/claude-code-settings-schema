@@ -21,6 +21,45 @@ export type ClaudeModel =
 	| 'claude-3-haiku-20240307'
 	| string; // Allow custom models
 
+/**
+ * Hook command configuration
+ */
+export interface hook_command {
+	/**
+	 * Command type
+	 */
+	type: 'command';
+
+	/**
+	 * Command to execute
+	 * @example "prettier --write $file_path"
+	 */
+	command: string;
+
+	/**
+	 * Timeout in seconds (optional)
+	 * @example 60
+	 */
+	timeout?: number;
+}
+
+/**
+ * Hook matcher configuration
+ */
+export interface hook_matcher {
+	/**
+	 * Tool pattern matcher (optional, case-sensitive)
+	 * Empty string or "*" matches all tools
+	 * @examples ["Edit|MultiEdit|Write", "Bash", "*", ""]
+	 */
+	matcher?: string;
+
+	/**
+	 * Array of hooks to execute
+	 */
+	hooks: hook_command[];
+}
+
 export interface ClaudeCodeSettings {
 	/**
 	 * Permission configuration for tool usage and file access
@@ -65,16 +104,49 @@ export interface ClaudeCodeSettings {
 	 */
 	hooks?: {
 		/**
-		 * Commands to run before tool execution
-		 * @example { "Bash": "echo 'Running command...'" }
+		 * Hooks that run before tool calls
 		 */
-		PreToolUse?: Record<string, string>;
+		PreToolUse?: hook_matcher[];
 
 		/**
-		 * Commands to run after tool execution
-		 * @example { "Write": "git add ." }
+		 * Hooks that run after tool completion
 		 */
-		PostToolUse?: Record<string, string>;
+		PostToolUse?: hook_matcher[];
+
+		/**
+		 * Hooks that run on notifications
+		 */
+		Notification?: hook_matcher[];
+
+		/**
+		 * Hooks that run when user submits a prompt
+		 */
+		UserPromptSubmit?: hook_matcher[];
+
+		/**
+		 * Hooks that run when stopping
+		 */
+		Stop?: hook_matcher[];
+
+		/**
+		 * Hooks that run when subagent stops
+		 */
+		SubagentStop?: hook_matcher[];
+
+		/**
+		 * Hooks that run before compacting
+		 */
+		PreCompact?: hook_matcher[];
+
+		/**
+		 * Hooks that run at session start
+		 */
+		SessionStart?: hook_matcher[];
+
+		/**
+		 * Hooks that run at session end
+		 */
+		SessionEnd?: hook_matcher[];
 	};
 
 	/**

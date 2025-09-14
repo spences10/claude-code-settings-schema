@@ -96,14 +96,76 @@
       "type": "object",
       "properties": {
         "PreToolUse": {
-          "$ref": "#/definitions/Record<string,string>",
-          "description": "Commands to run before tool execution",
+          "description": "Hooks that run before tool calls",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
           "title": "PreToolUse"
         },
         "PostToolUse": {
-          "$ref": "#/definitions/Record<string,string>",
-          "description": "Commands to run after tool execution",
+          "description": "Hooks that run after tool completion",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
           "title": "PostToolUse"
+        },
+        "Notification": {
+          "description": "Hooks that run on notifications",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "Notification"
+        },
+        "UserPromptSubmit": {
+          "description": "Hooks that run when user submits a prompt",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "UserPromptSubmit"
+        },
+        "Stop": {
+          "description": "Hooks that run when stopping",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "Stop"
+        },
+        "SubagentStop": {
+          "description": "Hooks that run when subagent stops",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "SubagentStop"
+        },
+        "PreCompact": {
+          "description": "Hooks that run before compacting",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "PreCompact"
+        },
+        "SessionStart": {
+          "description": "Hooks that run at session start",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "SessionStart"
+        },
+        "SessionEnd": {
+          "description": "Hooks that run at session end",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_matcher"
+          },
+          "title": "SessionEnd"
         }
       },
       "title": "hooks"
@@ -146,6 +208,62 @@
     "Record<string,string>": {
       "title": "Record<string,string>",
       "type": "object"
+    },
+    "hook_matcher": {
+      "description": "Hook matcher configuration",
+      "title": "hook_matcher",
+      "type": "object",
+      "properties": {
+        "matcher": {
+          "description": "Tool pattern matcher (optional, case-sensitive)\nEmpty string or \"*\" matches all tools",
+          "examples": [
+            "Edit|MultiEdit|Write",
+            "Bash",
+            "*",
+            ""
+          ],
+          "type": "string",
+          "title": "matcher"
+        },
+        "hooks": {
+          "description": "Array of hooks to execute",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hook_command"
+          },
+          "title": "hooks"
+        }
+      },
+      "required": [
+        "hooks"
+      ]
+    },
+    "hook_command": {
+      "description": "Hook command configuration",
+      "title": "hook_command",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Command type",
+          "type": "string",
+          "const": "command",
+          "title": "type"
+        },
+        "command": {
+          "description": "Command to execute",
+          "type": "string",
+          "title": "command"
+        },
+        "timeout": {
+          "description": "Timeout in seconds (optional)",
+          "type": "number",
+          "title": "timeout"
+        }
+      },
+      "required": [
+        "command",
+        "type"
+      ]
     }
   },
   "examples": [
