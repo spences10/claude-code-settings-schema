@@ -206,7 +206,8 @@
       "type": "object",
       "properties": {
         "matcher": {
-          "description": "Tool pattern matcher (optional, case-sensitive)\nEmpty string or \"*\" matches all tools",
+          "description": "Tool pattern matcher (optional, case-sensitive)\nEmpty string or \"*\" matches all tools\nUse \"|\" to match multiple tools: \"Edit|Write|MultiEdit\"",
+          "pattern": "^(\\*|||(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write)(\\|(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write))*)$",
           "examples": [
             "Edit|MultiEdit|Write",
             "Bash",

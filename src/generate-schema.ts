@@ -88,5 +88,21 @@ export function generate_claude_code_schema(): object {
 		});
 	}
 
+	// Add pattern validation for hook matchers
+	if (
+		enhanced_schema.definitions &&
+		enhanced_schema.definitions.hook_matcher
+	) {
+		const hook_matcher_def = enhanced_schema.definitions
+			.hook_matcher as any;
+		if (
+			hook_matcher_def.properties &&
+			hook_matcher_def.properties.matcher
+		) {
+			hook_matcher_def.properties.matcher.pattern =
+				'^(\\*|||(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write)(\\|(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write))*)$';
+		}
+	}
+
 	return enhanced_schema;
 }

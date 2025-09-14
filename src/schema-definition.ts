@@ -44,12 +44,32 @@ export interface hook_command {
 }
 
 /**
+ * Valid Claude Code tool names
+ */
+export type valid_tool_name =
+	| 'Bash'
+	| 'Edit'
+	| 'Glob'
+	| 'Grep'
+	| 'MultiEdit'
+	| 'NotebookEdit'
+	| 'NotebookRead'
+	| 'Read'
+	| 'Task'
+	| 'TodoWrite'
+	| 'WebFetch'
+	| 'WebSearch'
+	| 'Write';
+
+/**
  * Hook matcher configuration
  */
 export interface hook_matcher {
 	/**
 	 * Tool pattern matcher (optional, case-sensitive)
 	 * Empty string or "*" matches all tools
+	 * Use "|" to match multiple tools: "Edit|Write|MultiEdit"
+	 * @pattern ^(\*||(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write)(\|(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write))*)$
 	 * @examples ["Edit|MultiEdit|Write", "Bash", "*", ""]
 	 */
 	matcher?: string;
