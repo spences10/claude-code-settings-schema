@@ -20,7 +20,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9]*(([^)]*))?$",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*(\\([^)]*\\))?$",
             "description": "Tool permission pattern. Format: ToolName or ToolName(pattern)",
             "examples": [
               "Bash",
@@ -43,7 +43,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9]*(([^)]*))?$",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*(\\([^)]*\\))?$",
             "description": "Tool permission pattern. Format: ToolName or ToolName(pattern)",
             "examples": [
               "Bash",
@@ -66,7 +66,7 @@
           "type": "array",
           "items": {
             "type": "string",
-            "pattern": "^[A-Za-z][A-Za-z0-9]*(([^)]*))?$",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*(\\([^)]*\\))?$",
             "description": "Tool permission pattern. Format: ToolName or ToolName(pattern)",
             "examples": [
               "Bash",
