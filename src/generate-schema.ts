@@ -67,7 +67,7 @@ export function generate_claude_code_schema(): object {
 	) {
 		const tool_pattern_schema = {
 			type: 'string',
-			pattern: '^[A-Za-z][A-Za-z0-9]*(([^)]*))?$',
+			pattern: '^[A-Za-z][A-Za-z0-9]*(\\([^)]*\\))?$',
 			description:
 				'Tool permission pattern. Format: ToolName or ToolName(pattern)',
 			examples: [

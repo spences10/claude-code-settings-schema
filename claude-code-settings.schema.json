@@ -1,7 +1,3 @@
-
-> claude-code-settings-schema@0.0.0 generate /home/scott/repos/claude-code-settings-schema
-> node dist/cli.js
-
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Claude Code Settings",
