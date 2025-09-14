@@ -176,17 +176,8 @@
       "title": "apiKeyHelper"
     },
     "statusLine": {
+      "$ref": "#/definitions/status_line_config",
       "description": "Custom status line configuration",
-      "anyOf": [
-        {
-          "type": "object",
-          "properties": {},
-          "additionalProperties": true
-        },
-        {
-          "type": "string"
-        }
-      ],
       "title": "statusLine"
     },
     "outputStyle": {
@@ -258,6 +249,33 @@
           "description": "Timeout in seconds (optional)",
           "type": "number",
           "title": "timeout"
+        }
+      },
+      "required": [
+        "command",
+        "type"
+      ]
+    },
+    "status_line_config": {
+      "description": "Status line command configuration",
+      "title": "status_line_config",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "Status line type",
+          "type": "string",
+          "const": "command",
+          "title": "type"
+        },
+        "command": {
+          "description": "Command or script path to execute for status line",
+          "type": "string",
+          "title": "command"
+        },
+        "padding": {
+          "description": "Padding for status line display (optional)\nSet to 0 for edge-to-edge display",
+          "type": "number",
+          "title": "padding"
         }
       },
       "required": [

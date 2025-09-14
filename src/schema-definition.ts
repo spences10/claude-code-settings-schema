@@ -60,6 +60,29 @@ export interface hook_matcher {
 	hooks: hook_command[];
 }
 
+/**
+ * Status line command configuration
+ */
+export interface status_line_config {
+	/**
+	 * Status line type
+	 */
+	type: 'command';
+
+	/**
+	 * Command or script path to execute for status line
+	 * @example "~/.claude/statusline.sh"
+	 */
+	command: string;
+
+	/**
+	 * Padding for status line display (optional)
+	 * Set to 0 for edge-to-edge display
+	 * @example 0
+	 */
+	padding?: number;
+}
+
 export interface ClaudeCodeSettings {
 	/**
 	 * Permission configuration for tool usage and file access
@@ -158,7 +181,7 @@ export interface ClaudeCodeSettings {
 	/**
 	 * Custom status line configuration
 	 */
-	statusLine?: string | object;
+	statusLine?: status_line_config;
 
 	/**
 	 * Output style configuration
