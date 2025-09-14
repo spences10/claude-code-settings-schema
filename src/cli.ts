@@ -5,9 +5,9 @@ import { generate_claude_code_schema } from './generate-schema';
 function main() {
 	try {
 		const schema = generate_claude_code_schema();
-		console.log(JSON.stringify(schema, null, 2));
+		process.stdout.write(JSON.stringify(schema, null, 2));
 	} catch (error) {
-		console.error('Error generating schema:', error);
+		process.stderr.write(`Error generating schema: ${error}\n`);
 		process.exit(1);
 	}
 }
