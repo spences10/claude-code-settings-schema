@@ -9,17 +9,25 @@ configuration files.
 
 ```bash
 # Using npx
-npx claude-code-settings-schema > claude-code-settings.schema.json
+npx claude-code-settings-schema
 
 # Using pnpm
-pnpm dlx claude-code-settings-schema > claude-code-settings.schema.json
+pnpm dlx claude-code-settings-schema
+
+# Using the short alias (after global install)
+pnpm dlx claude-code-settings-schema ccss
 ```
 
-### Local installation
+### Global installation
 
 ```bash
 npm install -g claude-code-settings-schema
-generate-claude-schema > claude-code-settings.schema.json
+# or
+pnpm add -g claude-code-settings-schema
+
+# Then use either command:
+claude-code-settings-schema
+ccss  # alias
 ```
 
 ## Features
@@ -33,7 +41,11 @@ based** - Generated from Anthropic's official documentation
 
 ## Usage with your settings
 
-Add the schema reference to your `.claude/settings.json`:
+The commands above will create a `claude-code-settings.schema.json`
+file in your current directory.
+
+Add the schema reference to your `.claude/settings.json`, pointing to
+where you generated the schema file:
 
 ```json
 {
@@ -59,6 +71,12 @@ Add the schema reference to your `.claude/settings.json`:
 	}
 }
 ```
+
+**Note:** The `$schema` path should match where you generated the
+schema file. If you generated it in your project root but your
+`.claude/settings.json` is in a subdirectory, use
+`"../claude-code-settings.schema.json"` or the appropriate relative
+path.
 
 ## What gets validated
 
