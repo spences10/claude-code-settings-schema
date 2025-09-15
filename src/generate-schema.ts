@@ -15,7 +15,7 @@ export function generate_claude_code_schema(): object {
 
 	// Create TypeScript program
 	const program = TJS.getProgramFromFiles(
-		[path.join(__dirname, '../src/schema-definition.ts')],
+		[path.join(__dirname, 'schema-definition.d.ts')],
 		{
 			target: 1, // ES5
 			module: 1, // CommonJS
