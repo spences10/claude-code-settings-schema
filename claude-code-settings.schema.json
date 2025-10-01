@@ -77,6 +77,29 @@
             ]
           },
           "title": "ask"
+        },
+        "additionalDirectories": {
+          "description": "Additional working directories that Claude has access to",
+          "examples": [
+            [
+              "../docs/"
+            ]
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "additionalDirectories"
+        },
+        "defaultMode": {
+          "description": "Default permission mode when opening Claude Code",
+          "type": "string",
+          "title": "defaultMode"
+        },
+        "disableBypassPermissionsMode": {
+          "description": "Set to \"disable\" to prevent bypassPermissions mode from being activated",
+          "type": "string",
+          "title": "disableBypassPermissionsMode"
         }
       },
       "title": "permissions"
@@ -90,6 +113,28 @@
       "description": "Override the default AI model",
       "type": "string",
       "title": "model"
+    },
+    "cleanupPeriodDays": {
+      "description": "How long to locally retain chat transcripts based on last activity date",
+      "default": 30,
+      "type": "number",
+      "title": "cleanupPeriodDays"
+    },
+    "includeCoAuthoredBy": {
+      "description": "Whether to include the co-authored-by Claude byline in git commits and pull requests",
+      "default": true,
+      "type": "boolean",
+      "title": "includeCoAuthoredBy"
+    },
+    "forceLoginMethod": {
+      "description": "Use \"claudeai\" to restrict login to Claude.ai accounts, \"console\" to restrict login to Claude Console (API usage billing) accounts",
+      "type": "string",
+      "title": "forceLoginMethod"
+    },
+    "forceLoginOrgUUID": {
+      "description": "Specify the UUID of an organization to automatically select it during login, bypassing the organization selection step\nRequires forceLoginMethod to be set",
+      "type": "string",
+      "title": "forceLoginOrgUUID"
     },
     "hooks": {
       "description": "Custom hooks for tool execution",

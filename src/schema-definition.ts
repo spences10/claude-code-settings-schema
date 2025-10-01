@@ -128,6 +128,24 @@ export interface ClaudeCodeSettings {
 		 * @examples ["Write(*)", "Bash(*)", "Delete"]
 		 */
 		ask?: ToolPattern[];
+
+		/**
+		 * Additional working directories that Claude has access to
+		 * @examples [["../docs/"]]
+		 */
+		additionalDirectories?: string[];
+
+		/**
+		 * Default permission mode when opening Claude Code
+		 * @example "acceptEdits"
+		 */
+		defaultMode?: string;
+
+		/**
+		 * Set to "disable" to prevent bypassPermissions mode from being activated
+		 * @example "disable"
+		 */
+		disableBypassPermissionsMode?: string;
 	};
 
 	/**
@@ -141,6 +159,33 @@ export interface ClaudeCodeSettings {
 	 * @example "claude-3-5-sonnet-20241022"
 	 */
 	model?: ClaudeModel;
+
+	/**
+	 * How long to locally retain chat transcripts based on last activity date
+	 * @example 20
+	 * @default 30
+	 */
+	cleanupPeriodDays?: number;
+
+	/**
+	 * Whether to include the co-authored-by Claude byline in git commits and pull requests
+	 * @example false
+	 * @default true
+	 */
+	includeCoAuthoredBy?: boolean;
+
+	/**
+	 * Use "claudeai" to restrict login to Claude.ai accounts, "console" to restrict login to Claude Console (API usage billing) accounts
+	 * @example "claudeai"
+	 */
+	forceLoginMethod?: string;
+
+	/**
+	 * Specify the UUID of an organization to automatically select it during login, bypassing the organization selection step
+	 * Requires forceLoginMethod to be set
+	 * @example "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+	 */
+	forceLoginOrgUUID?: string;
 
 	/**
 	 * Custom hooks for tool execution
