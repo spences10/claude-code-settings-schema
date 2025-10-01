@@ -1,5 +1,11 @@
 # claude-code-settings-schema
 
+## 0.0.4
+
+### Patch Changes
+
+- 4e7010d: update schema
+
 ## 0.0.3
 
 ### Patch Changes
