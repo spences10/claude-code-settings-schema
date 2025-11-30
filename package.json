@@ -30,12 +30,12 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@changesets/cli": "^2.29.7",
-    "@types/node": "^24.6.1",
-    "prettier": "^3.6.2",
+    "@changesets/cli": "^2.29.8",
+    "@types/node": "^24.10.1",
+    "prettier": "^3.7.3",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "typescript-json-schema": "^0.65.1"
+    "typescript-json-schema": "^0.67.0"
   }
 }
