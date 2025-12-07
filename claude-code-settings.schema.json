@@ -105,7 +105,7 @@
       "title": "permissions"
     },
     "env": {
-      "$ref": "#/definitions/Record<string,string>",
+      "$ref": "#/definitions/Record%3Cstring%2Cstring%3E",
       "description": "Environment variables to set for Claude Code sessions",
       "title": "env"
     },
@@ -238,6 +238,81 @@
         }
       ],
       "title": "outputStyle"
+    },
+    "companyAnnouncements": {
+      "description": "Announcements to display to users at startup\nMultiple announcements are cycled through at random",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "companyAnnouncements"
+    },
+    "disableAllHooks": {
+      "description": "Disable all hooks",
+      "type": "boolean",
+      "title": "disableAllHooks"
+    },
+    "enableAllProjectMcpServers": {
+      "description": "Automatically approve all MCP servers defined in project .mcp.json files",
+      "type": "boolean",
+      "title": "enableAllProjectMcpServers"
+    },
+    "enabledMcpjsonServers": {
+      "description": "List of specific MCP servers from .mcp.json files to approve",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "enabledMcpjsonServers"
+    },
+    "disabledMcpjsonServers": {
+      "description": "List of specific MCP servers from .mcp.json files to reject",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "disabledMcpjsonServers"
+    },
+    "allowedMcpServers": {
+      "description": "Enterprise allowlist of MCP servers users can configure\nUndefined = no restrictions, empty array = lockdown",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/McpServerFilter"
+      },
+      "title": "allowedMcpServers"
+    },
+    "deniedMcpServers": {
+      "description": "Enterprise denylist of MCP servers that are explicitly blocked\nDenylist takes precedence over allowlist",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/McpServerFilter"
+      },
+      "title": "deniedMcpServers"
+    },
+    "awsAuthRefresh": {
+      "description": "Custom script that modifies the .aws directory for authentication",
+      "type": "string",
+      "title": "awsAuthRefresh"
+    },
+    "awsCredentialExport": {
+      "description": "Custom script that outputs JSON with AWS credentials",
+      "type": "string",
+      "title": "awsCredentialExport"
+    },
+    "sandbox": {
+      "$ref": "#/definitions/SandboxConfig",
+      "description": "Sandbox configuration for bash command isolation",
+      "title": "sandbox"
+    },
+    "enabledPlugins": {
+      "$ref": "#/definitions/Record%3Cstring%2Cboolean%3E",
+      "description": "Map of enabled plugins\nFormat: \"plugin-name@marketplace-name\": true/false",
+      "title": "enabledPlugins"
+    },
+    "extraKnownMarketplaces": {
+      "$ref": "#/definitions/Record%3Cstring%2C%7Bsource%3AMarketplaceSource%3B%7D%3E",
+      "description": "Additional plugin marketplaces",
+      "title": "extraKnownMarketplaces"
     }
   },
   "definitions": {
@@ -328,6 +403,104 @@
         "command",
         "type"
       ]
+    },
+    "McpServerFilter": {
+      "description": "MCP server filter for allowlist/denylist",
+      "title": "McpServerFilter",
+      "type": "object",
+      "properties": {
+        "serverName": {
+          "description": "Name of the MCP server",
+          "type": "string",
+          "title": "serverName"
+        }
+      },
+      "required": [
+        "serverName"
+      ]
+    },
+    "SandboxConfig": {
+      "description": "Sandbox configuration for bash command isolation",
+      "title": "SandboxConfig",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enable bash sandboxing (macOS/Linux only)",
+          "default": false,
+          "type": "boolean",
+          "title": "enabled"
+        },
+        "autoAllowBashIfSandboxed": {
+          "description": "Auto-approve bash commands when sandboxed",
+          "default": true,
+          "type": "boolean",
+          "title": "autoAllowBashIfSandboxed"
+        },
+        "excludedCommands": {
+          "description": "Commands that should run outside of the sandbox",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "excludedCommands"
+        },
+        "allowUnsandboxedCommands": {
+          "description": "Allow commands to run outside sandbox via dangerouslyDisableSandbox parameter",
+          "default": true,
+          "type": "boolean",
+          "title": "allowUnsandboxedCommands"
+        },
+        "network": {
+          "$ref": "#/definitions/SandboxNetworkConfig",
+          "description": "Network configuration for sandbox",
+          "title": "network"
+        },
+        "enableWeakerNestedSandbox": {
+          "description": "Enable weaker sandbox for unprivileged Docker environments (Linux only)\nReduces security",
+          "default": false,
+          "type": "boolean",
+          "title": "enableWeakerNestedSandbox"
+        }
+      }
+    },
+    "SandboxNetworkConfig": {
+      "description": "Sandbox network configuration",
+      "title": "SandboxNetworkConfig",
+      "type": "object",
+      "properties": {
+        "allowUnixSockets": {
+          "description": "Unix socket paths accessible in sandbox (for SSH agents, etc.)",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "allowUnixSockets"
+        },
+        "allowLocalBinding": {
+          "description": "Allow binding to localhost ports (macOS only)",
+          "default": false,
+          "type": "boolean",
+          "title": "allowLocalBinding"
+        },
+        "httpProxyPort": {
+          "description": "HTTP proxy port if bringing your own proxy",
+          "type": "number",
+          "title": "httpProxyPort"
+        },
+        "socksProxyPort": {
+          "description": "SOCKS5 proxy port if bringing your own proxy",
+          "type": "number",
+          "title": "socksProxyPort"
+        }
+      }
+    },
+    "Record<string,boolean>": {
+      "title": "Record<string,boolean>",
+      "type": "object"
+    },
+    "Record<string,{source:MarketplaceSource;}>": {
+      "title": "Record<string,{source:MarketplaceSource;}>",
+      "type": "object"
     }
   },
   "examples": [

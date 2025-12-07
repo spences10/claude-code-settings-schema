@@ -14,6 +14,8 @@ export type ToolPattern = string;
  * Available Claude models
  */
 export type ClaudeModel =
+	| 'claude-sonnet-4-5-20250929'
+	| 'claude-opus-4-5-20251101'
 	| 'claude-3-5-sonnet-20241022'
 	| 'claude-3-5-haiku-20241022'
 	| 'claude-3-opus-20240229'
@@ -47,14 +49,20 @@ export interface HookCommand {
  * Valid Claude Code tool names
  */
 export type ValidToolName =
+	| 'AskUserQuestion'
 	| 'Bash'
+	| 'BashOutput'
 	| 'Edit'
+	| 'ExitPlanMode'
 	| 'Glob'
 	| 'Grep'
+	| 'KillShell'
 	| 'MultiEdit'
 	| 'NotebookEdit'
 	| 'NotebookRead'
 	| 'Read'
+	| 'Skill'
+	| 'SlashCommand'
 	| 'Task'
 	| 'TodoWrite'
 	| 'WebFetch'
@@ -69,7 +77,7 @@ export interface HookMatcher {
 	 * Tool pattern matcher (optional, case-sensitive)
 	 * Empty string or "*" matches all tools
 	 * Use "|" to match multiple tools: "Edit|Write|MultiEdit"
-	 * @pattern ^(\*||(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write)(\|(Edit|Bash|Glob|Grep|MultiEdit|NotebookEdit|NotebookRead|Read|Task|TodoWrite|WebFetch|WebSearch|Write))*)$
+	 * @pattern ^(\*||(AskUserQuestion|Bash|BashOutput|Edit|ExitPlanMode|Glob|Grep|KillShell|MultiEdit|NotebookEdit|NotebookRead|Read|Skill|SlashCommand|Task|TodoWrite|WebFetch|WebSearch|Write)(\|(AskUserQuestion|Bash|BashOutput|Edit|ExitPlanMode|Glob|Grep|KillShell|MultiEdit|NotebookEdit|NotebookRead|Read|Skill|SlashCommand|Task|TodoWrite|WebFetch|WebSearch|Write))*)$
 	 * @examples ["Edit|MultiEdit|Write", "Bash", "*", ""]
 	 */
 	matcher?: string;
@@ -101,6 +109,113 @@ export interface StatusLineConfig {
 	 * @example 0
 	 */
 	padding?: number;
+}
+
+/**
+ * Sandbox network configuration
+ */
+export interface SandboxNetworkConfig {
+	/**
+	 * Unix socket paths accessible in sandbox (for SSH agents, etc.)
+	 * @example ["~/.ssh/agent-socket"]
+	 */
+	allowUnixSockets?: string[];
+
+	/**
+	 * Allow binding to localhost ports (macOS only)
+	 * @default false
+	 */
+	allowLocalBinding?: boolean;
+
+	/**
+	 * HTTP proxy port if bringing your own proxy
+	 * @example 8080
+	 */
+	httpProxyPort?: number;
+
+	/**
+	 * SOCKS5 proxy port if bringing your own proxy
+	 * @example 8081
+	 */
+	socksProxyPort?: number;
+}
+
+/**
+ * Sandbox configuration for bash command isolation
+ */
+export interface SandboxConfig {
+	/**
+	 * Enable bash sandboxing (macOS/Linux only)
+	 * @default false
+	 */
+	enabled?: boolean;
+
+	/**
+	 * Auto-approve bash commands when sandboxed
+	 * @default true
+	 */
+	autoAllowBashIfSandboxed?: boolean;
+
+	/**
+	 * Commands that should run outside of the sandbox
+	 * @example ["git", "docker"]
+	 */
+	excludedCommands?: string[];
+
+	/**
+	 * Allow commands to run outside sandbox via dangerouslyDisableSandbox parameter
+	 * @default true
+	 */
+	allowUnsandboxedCommands?: boolean;
+
+	/**
+	 * Network configuration for sandbox
+	 */
+	network?: SandboxNetworkConfig;
+
+	/**
+	 * Enable weaker sandbox for unprivileged Docker environments (Linux only)
+	 * Reduces security
+	 * @default false
+	 */
+	enableWeakerNestedSandbox?: boolean;
+}
+
+/**
+ * Marketplace source configuration for plugins
+ */
+export interface MarketplaceSource {
+	/**
+	 * Source type
+	 */
+	source: 'github' | 'git' | 'directory';
+
+	/**
+	 * GitHub repository (for github source)
+	 * @example "company-org/claude-plugins"
+	 */
+	repo?: string;
+
+	/**
+	 * Git URL (for git source)
+	 * @example "https://git.company.com/plugins.git"
+	 */
+	url?: string;
+
+	/**
+	 * Local filesystem path (for directory source, development only)
+	 */
+	path?: string;
+}
+
+/**
+ * MCP server filter for allowlist/denylist
+ */
+export interface McpServerFilter {
+	/**
+	 * Name of the MCP server
+	 */
+	serverName: string;
 }
 
 export interface ClaudeCodeSettings {
@@ -156,7 +271,7 @@ export interface ClaudeCodeSettings {
 
 	/**
 	 * Override the default AI model
-	 * @example "claude-3-5-sonnet-20241022"
+	 * @example "claude-sonnet-4-5-20250929"
 	 */
 	model?: ClaudeModel;
 
@@ -252,4 +367,82 @@ export interface ClaudeCodeSettings {
 	 * Output style configuration
 	 */
 	outputStyle?: string | object;
+
+	/**
+	 * Announcements to display to users at startup
+	 * Multiple announcements are cycled through at random
+	 * @example ["Welcome to Acme Corp! Review our code guidelines at docs.acme.com"]
+	 */
+	companyAnnouncements?: string[];
+
+	/**
+	 * Disable all hooks
+	 * @example true
+	 */
+	disableAllHooks?: boolean;
+
+	/**
+	 * Automatically approve all MCP servers defined in project .mcp.json files
+	 * @example true
+	 */
+	enableAllProjectMcpServers?: boolean;
+
+	/**
+	 * List of specific MCP servers from .mcp.json files to approve
+	 * @example ["memory", "github"]
+	 */
+	enabledMcpjsonServers?: string[];
+
+	/**
+	 * List of specific MCP servers from .mcp.json files to reject
+	 * @example ["filesystem"]
+	 */
+	disabledMcpjsonServers?: string[];
+
+	/**
+	 * Enterprise allowlist of MCP servers users can configure
+	 * Undefined = no restrictions, empty array = lockdown
+	 * @example [{ "serverName": "github" }]
+	 */
+	allowedMcpServers?: McpServerFilter[];
+
+	/**
+	 * Enterprise denylist of MCP servers that are explicitly blocked
+	 * Denylist takes precedence over allowlist
+	 * @example [{ "serverName": "filesystem" }]
+	 */
+	deniedMcpServers?: McpServerFilter[];
+
+	/**
+	 * Custom script that modifies the .aws directory for authentication
+	 * @example "aws sso login --profile myprofile"
+	 */
+	awsAuthRefresh?: string;
+
+	/**
+	 * Custom script that outputs JSON with AWS credentials
+	 * @example "/bin/generate_aws_grant.sh"
+	 */
+	awsCredentialExport?: string;
+
+	/**
+	 * Sandbox configuration for bash command isolation
+	 */
+	sandbox?: SandboxConfig;
+
+	/**
+	 * Map of enabled plugins
+	 * Format: "plugin-name@marketplace-name": true/false
+	 * @example { "formatter@company-tools": true }
+	 */
+	enabledPlugins?: Record<string, boolean>;
+
+	/**
+	 * Additional plugin marketplaces
+	 * @example { "company-tools": { "source": { "source": "github", "repo": "company/plugins" } } }
+	 */
+	extraKnownMarketplaces?: Record<
+		string,
+		{ source: MarketplaceSource }
+	>;
 }
