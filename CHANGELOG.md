@@ -1,5 +1,11 @@
 # claude-code-settings-schema
 
+## 0.0.5
+
+### Patch Changes
+
+- e294000: deprecate
+
 ## 0.0.4
 
 ### Patch Changes
